@@ -8,7 +8,7 @@ export function useFetching(api) {
     const [page, setPage] = useState({
         page: 1, // trang hiện tại
         pageCount: 5, // số lượng trang hiển thị
-        pageSize: 20, // số lượng phần tử trên 1 trang
+        pageSize: 10, // số lượng phần tử trên 1 trang
         total: 50, // tổng số phần tử
     });
 
@@ -17,16 +17,11 @@ export function useFetching(api) {
     useEffect(() => {
         const controller = new AbortController();
         isMounted.current = true;
-        axios({
-            url: `${api}?pagination[pageSize]=${page.pageSize}&pagination[page]=${page.page}`,
-            signal: controller.signal,
-        })
+
+        api(page.page, page.pageSize, controller.signal)
             .then((res) => {
                 if (isMounted.current) {
-                    setPage({
-                        ...res.data.meta.pagination,
-                    });
-                    setData(res.data.data);
+                    setData(res);
                     setLoading(false);
                 }
             })
@@ -55,6 +50,7 @@ export function useFetching(api) {
             };
         });
     }
+    console.log(page);
 
     function nextPage() {
         if (page.page < page.pageCount) {

@@ -3,10 +3,12 @@ import { render } from "@/common/renderHelper";
 
 import { Skeleton, Pagination, Button } from "antd";
 import { ReloadOutlined } from "@ant-design/icons";
+import { getTasks } from "@/services/task";
 
 export default function TaskList(props) {
     const { data, loading, error, page, loadPage, nextPage, prevPage, reload } =
-        useFetching("/tasks");
+        useFetching(getTasks);
+
     const element = (
         <div className="list">
             <Pagination
@@ -26,9 +28,7 @@ export default function TaskList(props) {
                               return <Skeleton key={index} active />;
                           })
                     : data?.map((item) => {
-                          return (
-                              <li key={item?.id}>{item?.attributes?.title}</li>
-                          );
+                          return <li key={item?.id}>{item?.name}</li>;
                       })}
             </ul>
             <button className="add-card-btn btn">Add a card</button>

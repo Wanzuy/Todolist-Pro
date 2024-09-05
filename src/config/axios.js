@@ -1,2 +1,2 @@
 import axios from "axios";
-axios.defaults.baseURL = "https://backoffice.nodemy.vn/api";
+axios.defaults.baseURL = "http://localhost:5000";

@@ -222,6 +222,7 @@ body {
 }
 
 .list {
+    padding: 10px 0;
     flex: 0 0 27rem;
     display: flex;
     flex-direction: column;
